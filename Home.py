@@ -6,13 +6,21 @@ import os
 
 
 def download_files():
-    url_full = "https://drive.google.com/file/d/1ySyspDK7g1DQIVbegpDOpwv9FH73smiB/view?usp=sharing"
+    documents_file = "https://drive.google.com/file/d/1qvHCmLFW9z3QJQpUvINsfdVEufTEaKUv/view?usp=sharing"
 
-    if os.path.exists("./models/oral_testimonies/embeddings"):
+    if os.path.exists("./models/annual_reports/documents"):
         pass
     else:
-        output = "./models/oral_testimonies/embeddings"
-        gdown.download(url_full, output, quiet=False, fuzzy=True)
+        output = "./models/annual_reports/documents"
+        gdown.download(documents_file, output, quiet=False, fuzzy=True)
+        print("Download Complete")
+
+    embeddings_file = "https://drive.google.com/file/d/1ZrLR_e6u4AotBtNGllC7k49IbI94y7dG/view?usp=sharing"
+    if os.path.exists("./models/annual_reports/embeddings"):
+        pass
+    else:
+        output = "./models/annual_reports/embeddings"
+        gdown.download(embeddings_file, output, quiet=False, fuzzy=True)
         print("Download Complete")
 
 # download_files()
