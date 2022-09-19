@@ -23,7 +23,7 @@ def download_files():
         gdown.download(embeddings_file, output, quiet=False, fuzzy=True)
         print("Download Complete")
 
-# download_files()
+download_files()
 
 
 @st.cache(allow_output_mutation=True)
