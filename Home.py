@@ -37,25 +37,63 @@ st.sidebar.image("images/logo.png")
 with open ("markdown/description.md", "r") as f:
     description = f.read()
 st.sidebar.markdown(description, unsafe_allow_html=True)
+
+
+
+
 query = st.sidebar.text_input("Query")
 num_results = st.sidebar.number_input("Number of Results", 1, 2000, 20)
+
+search = st.sidebar.button("Search")
+
+st.sidebar.header("Color Selector")
+schema = st.sidebar.selectbox("Choose Color Schema",
+
+                                ["Burnt Orange",
+                                "Yellows",
+                                "Grayscale"]
+                                )
+if schema == "Burnt Orange":
+    high_default = "#7f0000"
+    medium_default = "#ef6548"
+    low_default = "#fee8c8"
+elif schema == "Yellows":
+    high_default = "#bfb526"
+    medium_default = "#ffeb3b"
+    low_default = "#f3f2af"
+elif schema == "Grayscale":
+    high_default = "#525252"
+    medium_default = "#d9d9d9"
+    low_default = "#f0f0f0"
+
+col1, col2 = st.sidebar.columns(2)
+high_thresh = col1.number_input("High Threshold", 0.0, 0.99, 0.1)
+high_thresh_color = col2.color_picker('High Threshold Color', high_default)
+
+
+col3, col4 = st.sidebar.columns(2)
+medium_thresh = col3.number_input("Medium Threshold", 0.0, 0.99, 0.075)
+medium_thresh_color = col4.color_picker('Medium Threshold Color', medium_default)
+
+col5, col6 = st.sidebar.columns(2)
+low_thresh = col5.number_input("Low Threshold", 0.0, 0.99, 0.05)
+low_thresh_color = col6.color_picker('Low Threshold Color', low_default)
 
 embeddings = load_txtai()
 
 
-def create_html(result):
+def create_html(result, high_thresh, medium_thresh, low_thresh, high_thresh_color, medium_thresh_color, low_thresh_color):
     output = f""
     spans = []
     for token, score in result["tokens"]:
         color = None
-        if score >= 0.1:
-            color = "#fdd835"
-        elif score >= 0.075:
-            color = "#ffeb3b"
-        elif score >= 0.05:
-            color = "#ffee58"
-        elif score >= 0.025:
-            color = "#fff59d"
+        if score >= high_thresh:
+            color = high_thresh_color
+        elif score >= medium_thresh:
+            color = medium_thresh_color
+        elif score >= low_thresh:
+            color = low_thresh_color
+
 
         spans.append((token, score, color))
 
@@ -65,16 +103,20 @@ def create_html(result):
 
     for token, _, color in spans:
         if color:
-            output += f"<span style='background-color: {color}'>{token}</span> "
+            if color == high_thresh_color:
+                text_color = "#ffffff"
+                output += f"<span style='background-color: {color}; color: {text_color}'>{token}</span> "
+            else:
+                output += f"<span style='background-color: {color}'>{token}</span> "
         else:
             output += f"{token} "
     return output
 
 
-if st.sidebar.button("Search"):
+if search:
     res = embeddings.explain(query, limit = num_results)
 
-    html_txt = [create_html(r) for r in res]
+    html_txt = [create_html(r, high_thresh, medium_thresh, low_thresh, high_thresh_color, medium_thresh_color, low_thresh_color) for r in res]
     indices = [index['id'] for index in res]
 
     scores = [index['score'] for index in res]
