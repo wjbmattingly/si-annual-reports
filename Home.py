@@ -31,12 +31,12 @@ def load_txtai():
     embeddings = Embeddings({"path": "sentence-transformers/all-MiniLM-L6-v2", "content": True})
     embeddings.load("models/annual_reports")
     return embeddings
-
-st.title("Smithsonian Annual Reports")
-st.sidebar.image("images/logo.png")
 with open ("markdown/description.md", "r") as f:
     description = f.read()
 st.sidebar.markdown(description, unsafe_allow_html=True)
+st.title("Smithsonian Annual Reports")
+st.sidebar.image("images/logo.png")
+
 
 
 
