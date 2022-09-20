@@ -9,7 +9,7 @@ TxtAI and this application resolve some of these issues by vectorizing all parag
 
 A small subset of the Annual Reports are currently used for this beta version of the application. Due to the varied OCR quality of the annual reports, not all text data is available for each report. Only sentences larger than 7 words were indexed.
 
-**Current Version**: 0.0.2
+**Current Version**: 0.0.3
 
 ## Version History
 ### Version 0.0.3
