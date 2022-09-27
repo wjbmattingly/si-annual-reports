@@ -138,10 +138,14 @@ def create_html(result, high_thresh, medium_thresh, low_thresh, high_thresh_colo
 
 def html_pages(page_num, text_file):
     page_data = bhl_df[bhl_df["Archive ID"] == str(text_file)]["BHL Link URL"].tolist()
-    page_data = page_data[0].replace("itempdf", "item")
+    if page_data:
+        page_data = page_data[0].replace("itempdf", "item")
+        return f"<a href='{page_data}#page/{page_num-1}/mode/1up'>Link to PDF</a>"
+    else:
+        return "Unknown Link"
     # st.write(page_data)
     # https://www.biodiversitylibrary.org/itemp/38165
-    return f"<a href='{page_data}#page/{page_num-1}/mode/1up'>Link to PDF</a>"
+    # return f"<a href='{page_data}#page/{page_num-1}/mode/1up'>Link to PDF</a>"
 
 if search:
     res = embeddings.explain(query, limit = num_results)
