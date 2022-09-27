@@ -162,6 +162,6 @@ if search:
             "similarity": scores,
             "text": html_txt
     }
-    df = pd.DataFrame(data)
+    res_df = pd.DataFrame(data)
 
-    st.markdown(df.to_markdown(), unsafe_allow_html=True)
+    st.markdown(res_df.to_markdown(), unsafe_allow_html=True)
