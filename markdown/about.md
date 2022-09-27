@@ -12,6 +12,9 @@ A small subset of the Annual Reports are currently used for this beta version of
 **Current Version**: 0.0.3
 
 ## Version History
+### Version 0.0.4
+New vectors for ~400k paragraphs from the complete OCR of the annual reports. This new version contains the paragraphs from the corrected OCR output. Added the ability to link to specific page numbers in the PDFs
+
 ### Version 0.0.3
 Added broader color an threshold selection for users. Color schemas are provided as well. Added support for color-blind viewers.
 
